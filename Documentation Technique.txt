@@ -1,0 +1,80 @@
+Documentation Technique : Projet de Rétention des Talents (RH-AI)
+
+
+
+
+1. Architecture du Système
+
+
+Le système repose sur un pipeline hybride :
+
+Pipeline de données (Scikit-Learn) : Prétraitement, nettoyage et ingénierie de variables.
+
+Modèle de classification : Calcul d'un score de risque de départ (probabilité).
+
+Interface LLM (Grok API) : Interprétation textuelle du score et génération de recommandations RH personnalisées.
+
+
+
+2. Pipeline de Traitement des Données (code.ipynb)
+
+Le modèle utilise, comme données source, le fichier HRDataset_v14.csv, qui contient 311 entrées et 36 variables liées aux employés (données démographiques, performances, satisfaction, historique professionnel, etc.).
+
+Le pipeline suit une approche séquentielle via sklearn.pipeline.Pipeline :
+
+Nettoyage : Gestion des valeurs manquantes (SimpleImputer) et standardisation des types (dates, catégories).
+Toutes les colonnes de type "objet" (texte) ont été nettoyées pour supprimer les espaces inutiles en début et fin de chaîne (strip()), garantissant la cohérence des catégories.
+
+Feature Engineering :
+
+Création de ratios temporels (AbsencesPerYear, ProjectsPerYear).
+
+Discrétisation des variables continues en Bands (AgeBand, TenureBand) pour capturer des tendances non-linéaires.
+
+Encodage : Utilisation de OneHotEncoder pour les variables catégorielles (ex: département, source de recrutement) et StandardScaler pour les variables numériques.
+
+3. Modèle testés
+
+Modèles linéaires : LogisticRegression.
+
+Arbres de décision : DecisionTreeClassifier.
+
+Ensembles (Ensemble Methods) : RandomForestClassifier, ExtraTreesClassifier,
+GradientBoostingClassifier, AdaBoostClassifier, HistGradientBoostingClassifier.
+
+Modèles basés sur la distance : KNeighborsClassifier.
+
+Machines à vecteurs de support (SVM) : SVC.
+
+Modèles probabilistes : GaussianNB.
+
+Algorithme avec le meilleur score : RandomForestClassifier.
+
+Entrées : Matrice transformée par le pipeline (données démographiques, performance, engagement).
+
+Sortie : Risk Score (probabilité de démission entre 0 et 1).
+
+Méthodologie : Le modèle est entraîné sur les données historiques. L'importance des caractéristiques est calculée via permutation_importance pour identifier les leviers principaux de rétention.
+
+4. Intégration LLM (API Groq)
+
+
+Le module LLM transforme les prédictions brutes en actions RH concrètes.
+
+Fonctionnement :
+
+L'utilisateur interroge le système avec un Employee_ID.
+
+Le système récupère le Risk Score calculé par le modèle.
+
+Le système extrait les "facteurs à risque" (ex: score d'engagement bas, nombre élevé d'absences, performance en baisse).
+
+Prompting : Ces données sont envoyées à l'API Grok avec une instruction système (System Prompt) structurée : "Tu es un expert RH. Analyse ce profil, explique le score de risque et propose 3 actions de rétention concrètes pour le manager."
+
+
+5. Guide de déploiement et maintenance
+Prérequis : Python 3.x, pandas, scikit-learn, requests (pour l'API).
+
+Variables d'environnement : Créer un fichier .env contenant GROk_API_KEY. Ne jamais versionner ce fichier.
+
+Cycle de mise à jour : Le modèle doit être ré-entraîné périodiquement (ex: tous les trimestres) avec les nouvelles données RH pour maintenir sa précision.
