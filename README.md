@@ -54,3 +54,36 @@ Points d'attention (Éthique & Sécurité)
 Biais : Ce modèle a été entraîné sur des données historiques. Veillez à ne pas automatiser des décisions basées uniquement sur ces résultats sans examen humain.
 
 Sécurité : Ne jamais inclure votre clé API dans le code source ou dans un commit Git.
+
+
+Shéma d'architecture du système :
+
+```mermaid
+graph TD
+    %% Couche Données
+    subgraph Data_Layer [Couche Données]
+        A[Dataset RH HRDataset_v14.csv] --> B[Pipeline de Prétraitement]
+        B --> C[Imputation, Scaling, OneHotEncoding]
+    end
+
+    %% Couche Modèle
+    subgraph ML_Layer [Couche Modèle]
+        C --> D[RandomForest Classifier]
+        D -->|Génère| E[Score de Risque]
+        D -->|Analyse| F[Importances des Variables]
+    end
+
+    %% Couche LLM (Bloc 4 détaillé)
+    subgraph LLM_Layer [Couche d'Explicabilité & LLM]
+        E --> G[Prompt Engineering]
+        F --> G
+        G --> H{API Groq LLM}
+        H -->|Instruction système: Expert RH| I[Recommandations Personnalisées]
+    end
+
+    %% Output
+    I --> J[Dashboard RH: Actions à entreprendre]
+
+    %% Styles
+    style H fill:#f96,stroke:#333,stroke-width:2px
+    style D fill:#6cf,stroke:#333,stroke-width:2px
