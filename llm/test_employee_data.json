@@ -1,0 +1,18 @@
+{
+  "risk_score": 0.78,
+  "risk_level": "élevé",
+  "top_risk_factors": [
+    {
+      "feature": "YearsSinceLastPromotion",
+      "value": 4
+    },
+    {
+      "feature": "MonthlyIncome",
+      "value": "inférieur à la moyenne"
+    },
+    {
+      "feature": "JobSatisfaction",
+      "value": "faible"
+    }
+  ]
+}
