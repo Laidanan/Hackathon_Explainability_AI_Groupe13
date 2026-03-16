@@ -1,0 +1,1 @@
+OPENAI_API_KEY = "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"
