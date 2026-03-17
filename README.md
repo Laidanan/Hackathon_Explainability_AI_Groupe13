@@ -38,6 +38,11 @@ Installez les dépendances :
 
 pip install -r requirements.txt
 
+Pour lancer l'interface utilisateur et le moteur d'IA, exécutez la commande suivante dans votre terminal :
+uvicorn app:app --reload
+
+Si vous souhaitez tester uniquement la connexion au LLM sans l'interface web, vous pouvez exécuter le script de test :
+python llm/testAPI.py
 
 Flux d'exécution :
 Prétraitement : Lancez le script de pipeline pour transformer le dataset HRDataset_v14.csv et entraîner le modèle.
@@ -52,38 +57,6 @@ Biais : Ce modèle a été entraîné sur des données historiques. Veillez à n
 
 Sécurité : Ne jamais inclure votre clé API dans le code source ou dans un commit Git.
 
-
-Shéma d'architecture du système :
-
-```mermaid
-graph TD
-    %% Couche Données
-    subgraph Data_Layer [Couche Données]
-        A[Dataset RH HRDataset_v14.csv] --> B[Pipeline de Prétraitement]
-        B --> C[Imputation, Scaling, OneHotEncoding]
-    end
-
-    %% Couche Modèle
-    subgraph ML_Layer [Couche Modèle]
-        C --> D[RandomForest Classifier]
-        D -->|Génère| E[Score de Risque]
-        D -->|Analyse| F[Importances des Variables]
-    end
-
-    %% Couche LLM (Bloc 4 détaillé)
-    subgraph LLM_Layer [Couche d'Explicabilité & LLM]
-        E --> G[Prompt Engineering]
-        F --> G
-        G --> H{API Groq LLM}
-        H -->|Instruction système: Expert RH| I[Recommandations Personnalisées]
-    end
-
-    %% Output
-    I --> J[Dashboard RH: Actions à entreprendre]
-
-    %% Styles
-    style H fill:#f96,stroke:#333,stroke-width:2px
-    style D fill:#6cf,stroke:#333,stroke-width:2px
 =======
 ﻿# Hackathon Explainability AI - Groupe 13
 
@@ -111,3 +84,39 @@ graph TD
 uvicorn app:app --reload
 ```
 >>>>>>> 2d88722 (update)
+
+
+
+Shéma d'architecture du système :
+
+```mermaid
+graph TD
+    %% Couche Données
+    subgraph Data_Layer [Couche Données]
+        A[Dataset RH HRDataset_v14.csv] --> B[Pipeline de Prétraitement]
+        B --> C[Imputation, Scaling, OneHotEncoding]
+    end
+
+    %% Couche Modèle
+    subgraph ML_Layer [Couche Modèle]
+        C --> D[RandomForest Classifier]
+        D -->|Génère| E[Score de Risque]
+        D -->|Analyse| F[Importances des Variables]
+    end
+
+    %% Couche LLM
+    subgraph LLM_Layer [Couche d'Explicabilité & LLM]
+        E --> G[Prompt Engineering]
+        F --> G
+        G --> H{API Groq LLM}
+        H -->|Expert RH| I[Recommandations Personnalisées]
+    end
+
+    %% Output
+    I --> J[Dashboard RH]
+
+    %% Styles
+    style H fill:#f96,stroke:#333,stroke-width:2px
+    style D fill:#6cf,stroke:#333,stroke-width:2px
+
+
