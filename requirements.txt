@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-openai
-python-dotenv
-=======
-﻿fastapi
+fastapi
 uvicorn
 pandas
 numpy
@@ -11,4 +7,3 @@ imbalanced-learn
 joblib
 openai
 python-dotenv
->>>>>>> 2d88722 (update)
