@@ -42,5 +42,7 @@ Rédige un rapport structuré avec :
 1. Synthèse
 2. Facteurs principaux
 3. Actions recommandées
+
+Fais tout ça en faisant une mise en page propre à base de mise en gras des titres pour que ça puisse être plaisant à lire pour la personne chargée des ressources humaines.
 """
     return prompt
