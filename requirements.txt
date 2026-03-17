@@ -1,2 +1,14 @@
+<<<<<<< HEAD
 openai
 python-dotenv
+=======
+﻿fastapi
+uvicorn
+pandas
+numpy
+scikit-learn
+imbalanced-learn
+joblib
+openai
+python-dotenv
+>>>>>>> 2d88722 (update)

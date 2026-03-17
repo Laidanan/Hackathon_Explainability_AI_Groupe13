@@ -1,0 +1,171 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HR Risk Dashboard</title>
+  <style>
+    :root { --bg:#f4f6f8; --card:#ffffff; --ink:#1f2933; --muted:#52606d; --accent:#0b6e4f; --danger:#a61b29; --warning:#b06a00; --ok:#1f7a1f; --line:#d9e2ec; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:"Segoe UI", Tahoma, Geneva, Verdana, sans-serif; color:var(--ink); background: radial-gradient(circle at 10% 10%, #eaf7ef, var(--bg)); }
+    .wrap { max-width:1200px; margin:0 auto; padding:20px; display:grid; gap:16px; grid-template-columns:1fr; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px; box-shadow:0 4px 14px rgba(0,0,0,.05); }
+    h1 { margin:0 0 6px; font-size:1.5rem; }
+    h2 { margin:0 0 10px; font-size:1.05rem; }
+    .muted { color:var(--muted); font-size:.92rem; }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 12px; }
+    button { border:none; border-radius:8px; padding:10px 12px; cursor:pointer; background:var(--accent); color:#fff; font-weight:600; }
+    button.secondary { background:#486581; }
+    button.warn { background:var(--warning); }
+    table { width:100%; border-collapse:collapse; font-size:.92rem; }
+    th,td { border-bottom:1px solid var(--line); text-align:left; padding:8px 6px; vertical-align:top; }
+    th { background:#f8fafc; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:999px; color:#fff; font-size:.78rem; font-weight:700; }
+    .high { background:var(--danger); }
+    .medium { background:var(--warning); }
+    .low { background:var(--ok); }
+    label { display:block; font-size:.85rem; margin-top:8px; color:var(--muted); }
+    input { width:100%; border:1px solid var(--line); border-radius:8px; padding:8px; margin-top:4px; }
+    .row2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .chat { white-space:pre-wrap; border:1px solid var(--line); background:#fbfcfe; border-radius:10px; padding:10px; min-height:180px; font-size:.9rem; }
+    @media (max-width:980px){ .row2 { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card">
+      <h1>Classement des personnes a risque</h1>
+      <p class="muted">Le score est calcule avec le meilleur modele sauvegarde depuis <code>code.ipynb</code>, plus une base locale de personas.</p>
+      <div class="controls"><button id="btnRefresh">Rafraichir classement</button></div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Sexe</th>
+            <th>Poste</th>
+            <th>Salaire</th>
+            <th>Score</th>
+            <th>Niveau</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="rankingBody"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Chatbot RH (explication + recommandations)</h2>
+      <p class="muted">Clique sur "Expliquer" dans le tableau, puis pose ta question.</p>
+      <div class="row2">
+        <div><label>ID selectionne<input id="selectedId" readonly /></label></div>
+        <div><label>Question RH<input id="chatQuestion" placeholder="Comment reduire le risque de cette personne ?" /></label></div>
+      </div>
+      <div class="controls"><button id="btnAsk" class="warn">Demander au chatbot</button></div>
+      <div id="chatBox" class="chat">Aucune demande pour le moment.</div>
+    </section>
+
+    <section class="card">
+      <h2>Ajouter un profil RH (manuel)</h2>
+      <p class="muted">Le profil est enregistre dans la base locale des personas.</p>
+      <form id="manualForm">
+        <label>Name<input name="name" required /></label>
+        <div class="row2">
+          <label>Sexe<input name="sex" placeholder="F ou M" /></label>
+          <label>Department<input name="department" /></label>
+        </div>
+        <div class="row2">
+          <label>Position<input name="position" /></label>
+          <label>PerformanceScore<input name="performance_score" /></label>
+        </div>
+        <div class="row2">
+          <label>Salary<input name="salary" type="number" step="0.01" /></label>
+          <label>Absences<input name="absences" type="number" step="0.01" /></label>
+        </div>
+        <div class="row2">
+          <label>EmpSatisfaction<input name="emp_satisfaction" type="number" step="0.01" /></label>
+          <label>EngagementSurvey<input name="engagement_survey" type="number" step="0.01" /></label>
+        </div>
+        <div class="row2">
+          <label>DaysLateLast30<input name="days_late_last30" type="number" step="0.01" /></label>
+          <label>SpecialProjectsCount<input name="special_projects_count" type="number" step="0.01" /></label>
+        </div>
+        <label>RecruitmentSource<input name="recruitment_source" /></label>
+        <button type="submit" style="margin-top:10px;">Ajouter et scorer</button>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    function levelClass(level){ const key=(level||'').toLowerCase(); if(key==='high') return 'high'; if(key==='medium') return 'medium'; return 'low'; }
+    function fmtSalary(v){ if(v===null||v===undefined||v==='-') return '-'; const n=Number(v); return Number.isFinite(n)?n.toLocaleString('fr-FR'):'-'; }
+
+    async function loadRanking(){
+      const res=await fetch('/api/ranking?top_n=50');
+      const data=await res.json();
+      if(!res.ok){ document.getElementById('chatBox').textContent=data.detail||'Erreur API classement.'; return; }
+      if(data.warning){ document.getElementById('chatBox').textContent=data.warning; }
+
+      const items=data.items||[];
+      const body=document.getElementById('rankingBody');
+      body.innerHTML='';
+
+      items.forEach((item,idx)=>{
+        const tr=document.createElement('tr');
+        tr.innerHTML=`
+          <td>${idx+1}</td>
+          <td>${item.name||'-'}</td>
+          <td>${item.sex||'-'}</td>
+          <td>${item.position||'-'}</td>
+          <td>${fmtSalary(item.salary)}</td>
+          <td>${Number(item.risk_score||0).toFixed(4)}</td>
+          <td><span class="badge ${levelClass(item.risk_level)}">${item.risk_level||'Low'}</span></td>
+          <td><button data-id="${item.id}" class="secondary">Expliquer</button></td>
+        `;
+        body.appendChild(tr);
+      });
+
+      body.querySelectorAll('button[data-id]').forEach((btn)=>{
+        btn.addEventListener('click',()=>{ document.getElementById('selectedId').value=btn.getAttribute('data-id'); });
+      });
+    }
+
+    function formToPayload(form){
+      const fd=new FormData(form); const out={};
+      for(const [key,value] of fd.entries()){
+        if(value==='') continue;
+        const numFields=new Set(['salary','absences','emp_satisfaction','engagement_survey','days_late_last30','special_projects_count']);
+        out[key]=numFields.has(key)?Number(value):value;
+      }
+      return out;
+    }
+
+    async function addManualProfile(ev){
+      ev.preventDefault();
+      const payload=formToPayload(ev.target);
+      const res=await fetch('/api/manual',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      const data=await res.json();
+      if(!res.ok){ document.getElementById('chatBox').textContent=data.detail||'Erreur ajout profil manuel.'; return; }
+      ev.target.reset();
+      await loadRanking();
+      document.getElementById('selectedId').value=data.id;
+      document.getElementById('chatBox').textContent=`Profil ajoute: ${data.name||'N/A'} (score=${data.risk_score}).`;
+    }
+
+    async function askChat(){
+      const personId=document.getElementById('selectedId').value;
+      if(!personId){ document.getElementById('chatBox').textContent='Selectionne d\'abord une personne.'; return; }
+      const question=document.getElementById('chatQuestion').value||null;
+      const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({person_id:personId,question})});
+      const data=await res.json();
+      if(!res.ok){ document.getElementById('chatBox').textContent=data.detail||'Erreur chatbot.'; return; }
+      document.getElementById('chatBox').textContent=data.message;
+    }
+
+    document.getElementById('btnRefresh').addEventListener('click',loadRanking);
+    document.getElementById('manualForm').addEventListener('submit',addManualProfile);
+    document.getElementById('btnAsk').addEventListener('click',askChat);
+    loadRanking();
+  </script>
+</body>
+</html>
