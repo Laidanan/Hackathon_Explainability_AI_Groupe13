@@ -1,0 +1,25 @@
+Executive Summary : Solution d'IA pour la Rétention des Talents
+
+1. Le Défi Stratégique
+Actuellement, notre entreprise fait face à un taux de rotation (turnover) qui impacte la productivité et les coûts de recrutement. L'objectif de ce projet est de passer d'une gestion RH réactive à une stratégie proactive en identifiant les signaux faibles de démission avant qu'elles ne surviennent.
+
+2. La Solution : L'IA au service de l'Humain
+Nous avons développé une solution hybride combinant la précision statistique du machine learning et la puissance de l'IA générative :
+
+Moteur Prédictif : Un algorithme de Machine Learning (Random Forest) qui analyse plus de 36 indicateurs (performance, engagement, satisfaction, ancienneté) pour attribuer un score de risque à chaque employé.
+
+Assistant Décisionnel (LLM) : Une interface utilisant l'IA (Grok) qui traduit ces scores en diagnostics textuels et propose des plans d'action personnalisés pour chaque employé.
+
+3. Nos Engagements : IA Éthique & Explicable
+Pour garantir l'adhésion des collaborateurs et de la direction, le projet repose sur deux piliers :
+
+IA Éthique : Nous avons audité le dataset pour identifier les biais (ex: prédominance du département Production, variables sur les origines ou le sexe, etc..). Les variables discriminatoires sont écartées ou surveillées pour garantir une équité totale de traitement, quel que soit le genre ou l'origine.
+
+IA Explicable : Chaque score est justifié par les facteurs réels qui l'influencent (ex: manque de projets spéciaux ou délai trop long depuis la dernière revue), permettant une transparence totale envers les RH.
+
+4. Bénéfices Attendus
+Réduction des coûts et du temps : Diminution des frais liés au remplacement des talents clés, ainsi que de période de recherche de remplacement.
+
+Aide à la décision : Les managers disposent d'un outil de coaching pour mener des entretiens de rétention plus efficaces.
+
+Anticipation : Capacité à détecter des tendances de départ à l'échelle d'un département complet.
