@@ -16,8 +16,8 @@ LLM_DIR = ROOT_DIR / "llm"
 if str(LLM_DIR) not in sys.path:
     sys.path.append(str(LLM_DIR))
 
-from llm_client import call_llm  # noqa: E402
-from prompt_builder import build_prompt  # noqa: E402
+from llm_client import call_llm  
+from prompt_builder import build_prompt  
 
 app = FastAPI(title="HR Risk Dashboard", version="1.4.0")
 
