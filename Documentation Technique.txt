@@ -33,6 +33,10 @@ Discrétisation des variables continues en Bands (AgeBand, TenureBand) pour capt
 
 Encodage : Utilisation de OneHotEncoder pour les variables catégorielles (ex: département, source de recrutement) et StandardScaler pour les variables numériques.
 
+Fitting : Utilisation de SMOTE pour avoir des résultats plus pertinents.
+
+Pas d'optimisation de modèle, car cela baisse le score des résultats. 
+
 3. Modèle testés
 
 Modèles linéaires : LogisticRegression.
