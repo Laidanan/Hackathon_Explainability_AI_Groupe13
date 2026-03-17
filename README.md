@@ -37,10 +37,6 @@ Installez les dépendances :
 
 pip install -r requirements.txt
 
-Configurez vos variables d'environnement :
-Créez un fichier .env à la racine et ajoutez votre clé :
-
-GROQ_API_KEY=votre_cle_api_ici
 
 Flux d'exécution :
 Prétraitement : Lancez le script de pipeline pour transformer le dataset HRDataset_v14.csv et entraîner le modèle.
