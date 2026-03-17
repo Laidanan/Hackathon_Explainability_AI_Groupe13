@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Hackathon_Explainability_AI_Groupe13
 
 README : Système d'Aide à la Rétention des Talents (RH-AI)
@@ -83,3 +84,30 @@ graph TD
     %% Styles
     style H fill:#f96,stroke:#333,stroke-width:2px
     style D fill:#6cf,stroke:#333,stroke-width:2px
+=======
+﻿# Hackathon Explainability AI - Groupe 13
+
+## Architecture actuelle
+
+- `app.py` : API FastAPI + orchestration UI/LLM/ranking.
+- `static/index.html` : interface web (classement + chatbot + formulaire RH).
+- `predictive_model/model_service.py` : chargement modèle, scoring, explications/fallback.
+- `predictive_model/artifacts/` : modèle sauvegardé et metadata (`best_model.joblib`, `best_model_meta.json`).
+- `predictive_model/persona_db.json` : base locale de personas (seed + ajouts RH persistés).
+- `llm/llm_client.py` : appel LLM.
+- `llm/prompt_builder.py` : construction du prompt RH.
+- `llm/config.py` : configuration clé API.
+- `code.ipynb` : notebook data science/training.
+- `HRDataset_v14.csv` : dataset source.
+
+## Dossiers conservés
+
+- `.venv/` : environnement virtuel local.
+- `.tmp/` : dossier temporaire (reste un sous-dossier verrouillé par permissions).
+
+## Lancer l'app
+
+```bash
+uvicorn app:app --reload
+```
+>>>>>>> 2d88722 (update)

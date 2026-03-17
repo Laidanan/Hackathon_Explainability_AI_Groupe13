@@ -1,0 +1,104 @@
+[
+  {
+    "id": "persona-001",
+    "origin": "seed",
+    "base_features": {
+      "department": "Production",
+      "position": "Production Technician I",
+      "performance_score": "Fully Meets",
+      "salary": 48000,
+      "absences": 14,
+      "emp_satisfaction": 2,
+      "engagement_survey": 3.1,
+      "days_late_last30": 3,
+      "special_projects_count": 0,
+      "recruitment_source": "Indeed"
+    },
+    "name": "Lea Persona1"
+  },
+  {
+    "id": "persona-002",
+    "origin": "seed",
+    "base_features": {
+      "department": "IT/IS",
+      "position": "Software Engineer",
+      "performance_score": "Exceeds",
+      "salary": 82000,
+      "absences": 2,
+      "emp_satisfaction": 4,
+      "engagement_survey": 4.3,
+      "days_late_last30": 0,
+      "special_projects_count": 5,
+      "recruitment_source": "LinkedIn"
+    },
+    "name": "Adam Persona2"
+  },
+  {
+    "id": "persona-003",
+    "origin": "seed",
+    "base_features": {
+      "department": "Sales",
+      "position": "Sales Manager",
+      "performance_score": "Fully Meets",
+      "salary": 62000,
+      "absences": 9,
+      "emp_satisfaction": 2,
+      "engagement_survey": 2.9,
+      "days_late_last30": 4,
+      "special_projects_count": 1,
+      "recruitment_source": "Google Search"
+    },
+    "name": "Sara Persona3"
+  },
+  {
+    "id": "persona-004",
+    "origin": "seed",
+    "base_features": {
+      "department": "Admin Offices",
+      "position": "Administrative Assistant",
+      "performance_score": "Fully Meets",
+      "salary": 43000,
+      "absences": 6,
+      "emp_satisfaction": 3,
+      "engagement_survey": 3.4,
+      "days_late_last30": 1,
+      "special_projects_count": 2,
+      "recruitment_source": "Employee Referral"
+    },
+    "name": "Noah Persona4"
+  },
+  {
+    "id": "persona-005",
+    "origin": "seed",
+    "base_features": {
+      "department": "Production",
+      "position": "Production Technician II",
+      "performance_score": "Needs Improvement",
+      "salary": 41000,
+      "absences": 18,
+      "emp_satisfaction": 1,
+      "engagement_survey": 2.1,
+      "days_late_last30": 6,
+      "special_projects_count": 0,
+      "recruitment_source": "CareerBuilder"
+    },
+    "name": "Mia Persona5"
+  },
+  {
+    "id": "persona-98908152",
+    "origin": "manual",
+    "base_features": {
+      "department": "id",
+      "position": "jsp",
+      "performance_score": "5",
+      "salary": 2000.0,
+      "absences": 15.0,
+      "emp_satisfaction": 5.0,
+      "engagement_survey": 8.0,
+      "days_late_last30": 2.0,
+      "special_projects_count": 0.0,
+      "recruitment_source": "..."
+    },
+    "name": "Hugo Persona6"
+  }
+]

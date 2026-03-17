@@ -1,0 +1,245 @@
+{
+  "best_model": "HistGradientBoosting",
+  "metrics": [
+    {
+      "model": "HistGradientBoosting",
+      "accuracy": 0.7435897435897436,
+      "precision": 0.5833333333333334,
+      "recall": 0.8076923076923077,
+      "f1": 0.6774193548387096,
+      "roc_auc": 0.7892011834319527,
+      "best_params": {
+        "model__min_samples_leaf": 10,
+        "model__max_iter": 200,
+        "model__max_depth": 3,
+        "model__learning_rate": 0.01
+      }
+    },
+    {
+      "model": "LogisticRegression",
+      "accuracy": 0.717948717948718,
+      "precision": 0.5555555555555556,
+      "recall": 0.7692307692307693,
+      "f1": 0.6451612903225806,
+      "roc_auc": 0.7862426035502958,
+      "best_params": {
+        "model__solver": "lbfgs",
+        "model__C": 0.1
+      }
+    },
+    {
+      "model": "GradientBoosting",
+      "accuracy": 0.7435897435897436,
+      "precision": 0.5882352941176471,
+      "recall": 0.7692307692307693,
+      "f1": 0.6666666666666666,
+      "roc_auc": 0.7781065088757396,
+      "best_params": {
+        "model__subsample": 0.7,
+        "model__n_estimators": 200,
+        "model__max_depth": 3,
+        "model__learning_rate": 0.01
+      }
+    },
+    {
+      "model": "AdaBoost",
+      "accuracy": 0.6410256410256411,
+      "precision": 0.4772727272727273,
+      "recall": 0.8076923076923077,
+      "f1": 0.6,
+      "roc_auc": 0.7762573964497042,
+      "best_params": {
+        "model__n_estimators": 50,
+        "model__learning_rate": 0.1
+      }
+    },
+    {
+      "model": "RandomForest",
+      "accuracy": 0.6794871794871795,
+      "precision": 0.5135135135135135,
+      "recall": 0.7307692307692307,
+      "f1": 0.6031746031746031,
+      "roc_auc": 0.7618343195266272,
+      "best_params": {
+        "model__n_estimators": 500,
+        "model__min_samples_leaf": 10,
+        "model__max_features": null,
+        "model__max_depth": 12
+      }
+    },
+    {
+      "model": "DecisionTree",
+      "accuracy": 0.7307692307692307,
+      "precision": 0.5806451612903226,
+      "recall": 0.6923076923076923,
+      "f1": 0.631578947368421,
+      "roc_auc": 0.7588757396449705,
+      "best_params": {
+        "model__min_samples_split": 20,
+        "model__min_samples_leaf": 20,
+        "model__max_depth": 5
+      }
+    },
+    {
+      "model": "ExtraTrees",
+      "accuracy": 0.6923076923076923,
+      "precision": 0.5333333333333333,
+      "recall": 0.6153846153846154,
+      "f1": 0.5714285714285714,
+      "roc_auc": 0.7463017751479291,
+      "best_params": {
+        "model__n_estimators": 500,
+        "model__min_samples_leaf": 10,
+        "model__max_features": null,
+        "model__max_depth": 12
+      }
+    },
+    {
+      "model": "KNN",
+      "accuracy": 0.6282051282051282,
+      "precision": 0.46938775510204084,
+      "recall": 0.8846153846153846,
+      "f1": 0.6133333333333333,
+      "roc_auc": 0.7366863905325444,
+      "best_params": {
+        "model__weights": "uniform",
+        "model__p": 2,
+        "model__n_neighbors": 11
+      }
+    },
+    {
+      "model": "SVM",
+      "accuracy": 0.6666666666666666,
+      "precision": 0.5,
+      "recall": 0.6153846153846154,
+      "f1": 0.5517241379310345,
+      "roc_auc": 0.6989644970414202,
+      "best_params": {
+        "model__kernel": "linear",
+        "model__gamma": 1.0,
+        "model__C": 10.0
+      }
+    },
+    {
+      "model": "GaussianNB",
+      "accuracy": 0.3974358974358974,
+      "precision": 0.3384615384615385,
+      "recall": 0.8461538461538461,
+      "f1": 0.4835164835164835,
+      "roc_auc": 0.5177514792899408,
+      "best_params": {
+        "model__var_smoothing": 1e-08
+      }
+    }
+  ],
+  "feature_columns": [
+    "Salary",
+    "Position",
+    "MaritalDesc",
+    "CitizenDesc",
+    "Department",
+    "RecruitmentSource",
+    "PerformanceScore",
+    "EngagementSurvey",
+    "EmpSatisfaction",
+    "SpecialProjectsCount",
+    "DaysLateLast30",
+    "Absences",
+    "Age",
+    "TenureYears",
+    "EngagementCombined",
+    "BehaviorRiskScore",
+    "AbsenceSatisfactionInteraction",
+    "AbsencesPerYear",
+    "ProjectsPerYear",
+    "SalaryBand",
+    "TenureBand",
+    "AgeBand"
+  ],
+  "numeric_features": [
+    "Salary",
+    "EngagementSurvey",
+    "EmpSatisfaction",
+    "SpecialProjectsCount",
+    "DaysLateLast30",
+    "Absences",
+    "Age",
+    "TenureYears",
+    "EngagementCombined",
+    "BehaviorRiskScore",
+    "AbsenceSatisfactionInteraction",
+    "AbsencesPerYear",
+    "ProjectsPerYear"
+  ],
+  "categorical_features": [
+    "Position",
+    "MaritalDesc",
+    "CitizenDesc",
+    "Department",
+    "RecruitmentSource",
+    "PerformanceScore",
+    "SalaryBand",
+    "TenureBand",
+    "AgeBand"
+  ],
+  "defaults": {
+    "Salary": 62810.0,
+    "Position": "Production Technician I",
+    "MaritalDesc": "Single",
+    "CitizenDesc": "US Citizen",
+    "Department": "Production",
+    "RecruitmentSource": "Indeed",
+    "PerformanceScore": "Fully Meets",
+    "EngagementSurvey": 4.28,
+    "EmpSatisfaction": 4.0,
+    "SpecialProjectsCount": 0.0,
+    "DaysLateLast30": 0.0,
+    "Absences": 10.0,
+    "Age": 38.8,
+    "TenureYears": 13.07,
+    "EngagementCombined": 4.05,
+    "BehaviorRiskScore": 11.0,
+    "AbsenceSatisfactionInteraction": 8.0,
+    "AbsencesPerYear": 0.728744939271255,
+    "ProjectsPerYear": 0.0,
+    "SalaryBand": "Low",
+    "TenureBand": "7y+",
+    "AgeBand": "36-45"
+  },
+  "baseline": {
+    "Salary": 62506.0,
+    "Position": "Production Technician I",
+    "MaritalDesc": "Single",
+    "CitizenDesc": "US Citizen",
+    "Department": "Production",
+    "RecruitmentSource": "Indeed",
+    "PerformanceScore": "Fully Meets",
+    "EngagementSurvey": 4.3,
+    "EmpSatisfaction": 4.0,
+    "SpecialProjectsCount": 0.0,
+    "DaysLateLast30": 0.0,
+    "Absences": 11.0,
+    "Age": 38.8,
+    "TenureYears": 12.84,
+    "EngagementCombined": 4.05,
+    "BehaviorRiskScore": 11.0,
+    "AbsenceSatisfactionInteraction": 7.0,
+    "AbsencesPerYear": 0.7450331125827815,
+    "ProjectsPerYear": 0.0,
+    "SalaryBand": "Low",
+    "TenureBand": "7y+",
+    "AgeBand": "36-45"
+  },
+  "explainable_features": [
+    "Absences",
+    "EmpSatisfaction",
+    "EngagementSurvey",
+    "Salary",
+    "DaysLateLast30",
+    "SpecialProjectsCount",
+    "PerformanceScore",
+    "Department",
+    "Position",
+    "RecruitmentSource"
+  ]
+}
